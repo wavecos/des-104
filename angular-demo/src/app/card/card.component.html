@@ -1,0 +1,31 @@
+<div>
+
+  <div *ngIf="esMujer == 'false'">
+      <img
+      src="https://cdn2.iconfinder.com/data/icons/flat-style-svg-icons-part-1/512/user_man_male_profile_account-512.png"
+      width="90px">
+  </div>
+
+  <div *ngIf="esMujer == 'true'">
+      <img
+      src="https://cdn2.iconfinder.com/data/icons/perfect-flat-icons-2/512/Woman_female_lady_girl_user_man_avatar_people.png"
+      width="90px">
+  </div>
+
+  <p>
+    Nombre: {{ nombre }}
+  </p>
+  <p>
+    Peso (Kg): {{ peso }}
+  </p>
+  <p>
+    Altura (cm): {{ altura }}
+  </p>
+  <p>
+    Género: {{ esMujer == 'true' ? 'Mujer' : 'Varon' }}
+  </p>
+  <p>
+    BMI: {{ bmi }}
+  </p>
+  
+</div>
