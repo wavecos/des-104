@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'angular-demo';
 
+  bmiTemp: number = 0.0;
+
   empleados = [
     {
       nombre: "Juan Perez",
@@ -57,6 +59,11 @@ export class AppComponent {
 
   verificarTecla($event) {
     console.log($event);
+  }
+
+  recibirBMI($event) {
+    console.log('evento BMI recibido : ' + JSON.stringify($event));
+    this.bmiTemp = $event.bmi;
   }
 
 }

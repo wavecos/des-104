@@ -7,6 +7,7 @@ import { HelloComponent } from './hello/hello.component';
 import { PruebaComponent } from './prueba/prueba.component';
 import { HeaderComponent } from './header/header.component';
 import { CardComponent } from './card/card.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CardComponent } from './card/card.component';
     HelloComponent,
     HeaderComponent,
     PruebaComponent,
-    CardComponent
+    CardComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

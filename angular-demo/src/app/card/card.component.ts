@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -12,6 +12,8 @@ export class CardComponent implements OnInit {
   @Input() altura: number = 0.0;
   @Input() esMujer: boolean = false;
 
+  @Output() enviarBMIEvent = new EventEmitter();
+
   bmi = 0.0;
 
   constructor() { }
@@ -19,6 +21,11 @@ export class CardComponent implements OnInit {
   ngOnInit() {
       this.bmi = this.peso / (this.altura * this.altura) * 703;
       console.log("BMI Calculado :: " + this.bmi);
+  }
+
+  enviarBMI() {
+    console.log('se emitio un evento');
+    this.enviarBMIEvent.emit({ bmi: this.bmi });
   }
 
 }

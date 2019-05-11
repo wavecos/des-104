@@ -3,6 +3,9 @@
 <!-- <div style="background: gray">
   ...
 </div> -->
+<app-dashboard bmiTemp={{bmiTemp}} ></app-dashboard>
+<br>
+<br>
 
 <button (click)="adicionarEmpleado($event)" >Adicionar Empleado</button>
 <br>
@@ -14,7 +17,9 @@
     empleado={{e.nombre}} 
     altura={{e.altura}} 
     peso={{e.peso}} 
-    esMujer={{e.esMujer}}>
+    esMujer={{e.esMujer}}
+    (enviarBMIEvent)="recibirBMI($event)"
+    >
   </app-card>
 </div>
 
