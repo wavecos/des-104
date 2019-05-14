@@ -1,3 +1,13 @@
-<p>
-  song-list works!
-</p>
+<div class="container-fluid">
+  <h2>Búsqueda de Artista</h2>
+
+  <div class="row">
+      <form>
+          <input class="form-control" type="search" placeholder="Nombre artista" [(ngModel)]="artistName" name="artistName">
+          <button class="btn btn-primary" (click)="searchArtist()" >Buscar</button>
+        </form>
+  </div>
+
+  <app-song-card *ngFor="let s of songs;" [song]="s" ></app-song-card>
+
+</div>
