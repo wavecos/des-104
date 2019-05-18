@@ -1,4 +1,5 @@
 export class Song {
+    trackId: number;
     artist: string;
     album: string;
     track: string;

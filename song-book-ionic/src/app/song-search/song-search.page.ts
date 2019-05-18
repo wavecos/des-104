@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Song } from '../model/song.model';
 import { SongService } from '../services/song.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-song-search',
@@ -9,11 +10,11 @@ import { SongService } from '../services/song.service';
 })
 export class SongSearchPage implements OnInit {
 
-  artistName: string = '';
+  artistName: string = 'beatles';
   songs: Song[] = [];
   ocultar: boolean = false;
 
-  constructor(private songService: SongService) { }
+  constructor(private songService: SongService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -28,7 +29,8 @@ export class SongSearchPage implements OnInit {
   }
 
   showDetail() {
-    console.log('ir a detalle');
+    console.log('ir a detalle 3');
+    this.router.navigate['/song/detail'];
   }
 
 }

@@ -19,6 +19,7 @@ export class SongService {
 
         songsJson.forEach(jsonElement => {
           const song = new Song();
+          song.trackId = jsonElement['trackId']; 
           song.artist = jsonElement['artistName'];
           song.track = jsonElement['trackName'];
           song.album = jsonElement['collectionName'];
@@ -33,7 +34,21 @@ export class SongService {
 
         return songs;
       }));
-
   }
+
+  getSongById(trackId: string): Observable<Song> {
+    return this.http.get('https://itunes.apple.com/us/lookup?id=' + trackId)
+      .pipe(map(jsonData => {
+
+        console.log('  data : ' + JSON.stringify(jsonData));
+
+        const songJson = jsonData['results'][0];
+        console.log('song json : ' + JSON.stringify(songJson));
+
+        return new Song();
+      }));
+  }
+
+
 
 }
