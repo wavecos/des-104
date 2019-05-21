@@ -1,12 +1,37 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>song-detail</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>{{ song.genreName }}</ion-title>
+    <ion-buttons>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  Song Detail
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ song.track | uppercase }}</ion-card-title>
+      <ion-card-subtitle>{{ song.artist }} - ({{ song.album }})</ion-card-subtitle>
+    </ion-card-header>
+    <img [src]="song.albumImageUrl">
+    <ion-card-content>
+      <ion-chip color="secondary">
+        <ion-icon name="card"></ion-icon>
+        <ion-label>{{ song.price | currency: 'USD' }}</ion-label>
+      </ion-chip>
 
+      <p>{{ song.releaseDate | date: "dd/MM/yyyy hh:mm a" }}</p>
+
+      <ion-button size="large" fill="outline">
+        <ion-icon name="play"></ion-icon>
+      </ion-button>
+
+      <audio controls preload="none">
+        <source src="{{song.previewTrackUrl}}" type="audio/mp4" />
+      </audio>
+
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>

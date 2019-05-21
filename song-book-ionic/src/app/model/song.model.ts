@@ -4,7 +4,7 @@ export class Song {
     album: string;
     track: string;
     price: number;
-    releaseDate: string;
+    releaseDate: Date;
     albumImageUrl: string;
     previewTrackUrl: string;
     genreName: string;

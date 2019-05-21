@@ -1,54 +1,62 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Song } from '../model/song.model';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Song} from '../model/song.model';
+import {Observable} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SongService {
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
-  getSongs(artistName: string): Observable<Song[]> {
-    return this.http.get('https://itunes.apple.com/search?term=' + artistName + '&entity=song&limit=30')
-      .pipe(map(jsonData => {
-        const songsJson = jsonData['results'];
-        const songs: Song[] = [];
+    getSongs(artistName: string): Observable<Song[]> {
+        return this.http.get('https://itunes.apple.com/search?term=' + artistName + '&entity=song&limit=30')
+            .pipe(map(jsonData => {
+                const songsJson = jsonData['results'];
+                const songs: Song[] = [];
 
-        songsJson.forEach(jsonElement => {
-          const song = new Song();
-          song.trackId = jsonElement['trackId']; 
-          song.artist = jsonElement['artistName'];
-          song.track = jsonElement['trackName'];
-          song.album = jsonElement['collectionName'];
-          song.price = jsonElement['trackPrice'];
-          song.releaseDate = jsonElement['releaseDate'];
-          song.albumImageUrl = jsonElement['artworkUrl100'];
-          song.previewTrackUrl = jsonElement['previewUrl'];
-          song.genreName = jsonElement['primaryGenreName'];
+                songsJson.forEach(jsonElement => {
+                    const song = new Song();
+                    song.trackId = jsonElement['trackId'];
+                    song.artist = jsonElement['artistName'];
+                    song.track = jsonElement['trackName'];
+                    song.album = jsonElement['collectionName'];
+                    song.price = jsonElement['trackPrice'];
+                    song.releaseDate = jsonElement['releaseDate'] as Date;
+                    song.albumImageUrl = jsonElement['artworkUrl100'];
+                    song.previewTrackUrl = jsonElement['previewUrl'];
+                    song.genreName = jsonElement['primaryGenreName'];
 
-          songs.push(song);
-        });
+                    songs.push(song);
+                });
 
-        return songs;
-      }));
-  }
+                return songs;
+            }));
+    }
 
-  getSongById(trackId: string): Observable<Song> {
-    return this.http.get('https://itunes.apple.com/us/lookup?id=' + trackId)
-      .pipe(map(jsonData => {
+    getSongById(trackId: string): Observable<Song> {
+        return this.http.get('https://itunes.apple.com/us/lookup?id=' + trackId)
+            .pipe(map(jsonData => {
+                // console.log('  data : ' + JSON.stringify(jsonData));
+                const songJson = jsonData['results'][0];
+                // console.log('song json : ' + JSON.stringify(songJson));
 
-        console.log('  data : ' + JSON.stringify(jsonData));
+                const song = new Song();
+                song.trackId = songJson['trackId'];
+                song.artist = songJson['artistName'];
+                song.track = songJson['trackName'];
+                song.album = songJson['collectionName'];
+                song.price = songJson['trackPrice'];
+                song.releaseDate = songJson['releaseDate'] as Date;
+                song.albumImageUrl = songJson['artworkUrl100'];
+                song.previewTrackUrl = songJson['previewUrl'];
+                song.genreName = songJson['primaryGenreName'];
 
-        const songJson = jsonData['results'][0];
-        console.log('song json : ' + JSON.stringify(songJson));
-
-        return new Song();
-      }));
-  }
-
-
+                return song;
+            }));
+    }
 
 }

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SongSearchPage implements OnInit {
 
-  artistName: string = 'beatles';
+  artistName: string = '';
   songs: Song[] = [];
   ocultar: boolean = false;
 
