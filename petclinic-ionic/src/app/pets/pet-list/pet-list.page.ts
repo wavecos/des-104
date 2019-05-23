@@ -15,6 +15,7 @@ export class PetListPage implements OnInit {
 
   ngOnInit() {
     this.pets = this.petService.getPets();
+    console.log('hello pet list!!');
   }
 
 }

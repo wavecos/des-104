@@ -1,5 +1,7 @@
 {
   "name": "petclinic-ionic",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
