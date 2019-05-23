@@ -19,7 +19,10 @@ const routes: Routes = [
         path: 'pet-list',
         loadChildren: './pets/pet-list/pet-list.module#PetListPageModule'
     },
-  { path: 'pet-form', loadChildren: './pets/pet-form/pet-form.module#PetFormPageModule' }
+    {
+        path: 'pet-form',
+        loadChildren: './pets/pet-form/pet-form.module#PetFormPageModule'
+    }
 ];
 
 @NgModule({

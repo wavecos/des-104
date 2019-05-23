@@ -1,9 +1,50 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>pet-form</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Añadir Mascota</ion-title>
+    <ion-buttons>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input type="text" clearInput="true" placeholder="Nombre de la mascota"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Raza</ion-label>
+      <ion-input type="text" clearInput="true" placeholder="Raza de la mascota"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Especie</ion-label>
+      <ion-select placeholder="Especie Mascota">
+        <ion-select-option *ngFor="let k of kinds | enumlist" [value]="k.key">{{ k.value }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Edad</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" min="2000-01-01" max="2019-12-31"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Fecha de Registro</ion-label>
+      <ion-input placeholder="Fecha de ingreso de la mascota"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/pet-list" >
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+
+
+
 
 </ion-content>
