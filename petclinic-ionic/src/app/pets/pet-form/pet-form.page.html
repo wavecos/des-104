@@ -9,6 +9,12 @@
 
 <ion-content>
 
+  <img [src]="photoUrl">
+
+  <ion-button (click)="takePhoto()">
+    <ion-icon slot="icon-only" name="camera"></ion-icon>
+  </ion-button>
+
   <ion-list>
     <ion-item>
       <ion-label position="stacked">Nombre</ion-label>
