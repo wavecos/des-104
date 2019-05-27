@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {Pet} from '../model/pet.model';
 import {Kind} from '../model/kind.enum';
 import {Status} from '../model/status.enum';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PetService {
 
-    constructor() {
+    constructor(private http: HttpClient) {
     }
 
     getPets(): Pet[] {
