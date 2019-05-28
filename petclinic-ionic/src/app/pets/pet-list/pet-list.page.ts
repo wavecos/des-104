@@ -14,8 +14,33 @@ export class PetListPage implements OnInit {
   constructor(private petService: PetService) { }
 
   ngOnInit() {
-    this.pets = this.petService.getPets();
-    console.log('hello pet list!!');
+    console.log('Pet List');
+    this.loadPets();
+  }
+
+  loadPets() {
+    this.petService.getPets()
+      .subscribe(response => {
+        if (response.status === 'OK') {
+          this.pets = [];
+          response.result.forEach(json => {
+            const pet: Pet = {
+              id: json['_id'],
+              name: json['name'],
+              age: json['age'],
+              kind: json['kind'],
+              breed: json['breed'],
+              photoUrl: json['photoUrl'],
+              registerDate: json['registerDate'],
+              status: json['status']
+            };
+            this.pets.push(pet);
+          });
+
+        } else {
+          console.log(response.message);
+        }
+      });
   }
 
 }

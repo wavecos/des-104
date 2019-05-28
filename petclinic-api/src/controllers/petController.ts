@@ -4,9 +4,9 @@ import Pet from "../model/pet.model";
 export let allPets = (req: Request, res: Response) => {
     Pet.find((err: any, pets: Document[]) => {
         if (err) {
-            res.send({ error: "Hubo un error al obtener las mascotas" });
+            res.send({ status: "ERROR", message: "Hubo un error al obtener las mascotas", result: err });
         } else {
-            res.send(pets);
+            res.send({ status: "OK", message: "", result: pets });
         }
     });
 };
@@ -15,9 +15,9 @@ export let getPet = (req: Request, res: Response) => {
     let petId = req.params.id;
     Pet.findById(petId, (err: any, petFinded: any) => {
         if (err) {
-            res.send({ error: "Hubo un error al obtener la mascota" });
+            res.send({ status: "ERROR", message: "Hubo un error al obtener la mascota", result: err });
         } else {
-            res.send(petFinded);
+            res.send({ status: "OK", message: "", result: petFinded });
         }
     });
 };
@@ -39,9 +39,9 @@ export let addPet = (req: Request, res: Response) => {
     pet.save((err: any, petSaved: any) => {
         if (err) {
             console.log(err);
-            res.send({ error: "Hubo un error al insertar la mascota" });
+            res.send({ status: "ERROR", message: "Hubo un error al insertar la mascota", result: err });
         } else {
-            res.send(petSaved);
+            res.send({ status: "OK", message: "Se inserto la mascota correctamente", result: petSaved });
         }
     });
 };
@@ -52,9 +52,9 @@ export let updatePet = (req: Request, res: Response) => {
 
     Pet.findByIdAndUpdate(petId, petData, (err: any, petOriginal: any) => {
         if (err) {
-            res.send(err);
+            res.send({ status: "ERROR", message: "Hubo un error al actualizar la mascota", result: err });
         } else {
-            res.send(petOriginal);
+            res.send({ status: "OK", message: "Se actualizó la mascota correctamente", result: petOriginal });
         }
     });
 

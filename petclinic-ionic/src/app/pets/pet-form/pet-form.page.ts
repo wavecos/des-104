@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {Kind} from '../../model/kind.enum';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {CameraResultType, CameraSource, Plugins} from '@capacitor/core';
+import {PetService} from '../../services/pet.service';
+import {Pet} from '../../model/pet.model';
+import {Status} from '../../model/status.enum';
+import {ToastController} from '@ionic/angular';
+import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {switchMap} from 'rxjs/internal/operators';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-pet-form',
@@ -12,10 +20,65 @@ export class PetFormPage implements OnInit {
 
   photoUrl: SafeResourceUrl;
   kinds = Kind;
+  pet: Pet = {
+    id: '',
+    name: '',
+    age: 0,
+    kind: Kind.DOG,
+    breed: '',
+    photoUrl: '',
+    registerDate: new Date(),
+    status: Status.ACTIVE
+  };
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer,
+              private petService: PetService,
+              private toastController: ToastController,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.activatedRoute.paramMap
+      .pipe(map(paramMap => {
+        const petId = paramMap.get('id');
+        return petId;
+      }))
+      .pipe(switchMap(petId => {
+        if (petId) { // edicion de mascota
+          return this.petService.getPetById(petId);
+        } else { // adicion de mascota
+          return of({
+            id: '',
+            name: '',
+            age: 0,
+            kind: Kind.DOG,
+            breed: '',
+            photoUrl: '',
+            registerDate: new Date(),
+            status: Status.ACTIVE
+          });
+        }
+      }))
+      .subscribe(pet => {
+        this.pet = pet;
+      });
+  }
+
+  savePet() {
+    console.log('Save Pet');
+    // console.log('pet :: ' + JSON.stringify(this.pet));
+    this.petService.createPet(this.pet)
+      .subscribe(response => {
+        this.showMessage(response.message);
+      });
+  }
+
+  async showMessage(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+
+    toast.present();
   }
 
   async takePhoto() {

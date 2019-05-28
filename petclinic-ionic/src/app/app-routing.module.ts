@@ -22,6 +22,10 @@ const routes: Routes = [
     {
         path: 'pet-form',
         loadChildren: './pets/pet-form/pet-form.module#PetFormPageModule'
+    },
+    {
+        path: 'pet-form/:id',
+        loadChildren: './pets/pet-form/pet-form.module#PetFormPageModule'
     }
 ];
 

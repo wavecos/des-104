@@ -1,40 +1,64 @@
 import {Injectable} from '@angular/core';
 import {Pet} from '../model/pet.model';
-import {Kind} from '../model/kind.enum';
-import {Status} from '../model/status.enum';
 import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {APIResponse} from '../model/apiresponse';
+import {map} from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class PetService {
 
-    constructor(private http: HttpClient) {
-    }
+  constructor(private http: HttpClient) {
+  }
 
-    getPets(): Pet[] {
-        const pets: Pet[] = [
-            {
-                id: '0',
-                name: 'firulais',
-                breed: 'Gran Danes',
-                kind: Kind.DOG,
-                age: 3,
-                registerDate: new Date(),
-                photoUrl: 'https://cdn.newsapi.com.au/image/v1/67a523605bca40778c6faaad93883a3b',
-                status: Status.ACTIVE
-            },
-            {
-                id: '1',
-                name: 'Garfield',
-                breed: 'Siames',
-                kind: Kind.CAT,
-                age: 5,
-                registerDate: new Date(),
-                photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF968Sm-HTQEZbOjG_CNBPBCo_2FFwOBTLPPr0cGU0bgKgFIt5',
-                status: Status.ACTIVE
-            }
-        ];
-        return pets;
-    }
+  getPets(): Observable<APIResponse> {
+    return this.http.get('http://localhost:8080/pet')
+      .pipe(map(json => {
+        const response: APIResponse = {
+          status: json['status'],
+          message: json['message'],
+          result: json['result']
+        };
+        return response;
+      }));
+  }
+
+  getPetById(id: string): Observable<Pet> {
+    return this.http.get('http://localhost:8080/pet/' + id)
+      .pipe(map(json => {
+        // const response: APIResponse = {
+        //   status: json['status'],
+        //   message: json['message'],
+        //   result: json['result']
+        // };
+        return json['result'];
+      }));
+  }
+
+  createPet(pet: Pet): Observable<APIResponse> {
+    return this.http.post('http://localhost:8080/pet', pet)
+      .pipe(map(json => {
+        const response: APIResponse = {
+          status: json['status'],
+          message: json['message'],
+          result: json['result']
+        };
+        return response;
+      }));
+  }
+
+  updatePet(id: string, pet: Pet): Observable<APIResponse> {
+    return this.http.put('http://localhost:8080/pet/' + id, pet)
+      .pipe(map(json => {
+        const response: APIResponse = {
+          status: json['status'],
+          message: json['message'],
+          result: json['result']
+        };
+        return response;
+      }));
+  }
+
 }
