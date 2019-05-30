@@ -34,6 +34,19 @@ export class PetListPage implements OnInit {
       });
   }
 
+  deletePet($event) {
+    const petId = $event;
+    console.log('Eliminar mascota con id : ' + petId);
+    this.petService.deletePetById(petId)
+      .subscribe(response => {
+        if (response.status === 'OK') {
+          this.loadPets();
+        }
+
+        this.showMessage(response.message);
+      });
+  }
+
   async showMessage(message: string) {
     const toast = await this.toastController.create({
       message: message,

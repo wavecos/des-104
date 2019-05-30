@@ -10,7 +10,7 @@
 <ion-content>
 
   <ion-list>
-    <app-pet-item *ngFor="let p of pets" [pet]="p" ></app-pet-item>
+    <app-pet-item (deleteEvent)="deletePet($event)" *ngFor="let p of pets" [pet]="p" ></app-pet-item>
   </ion-list>
 
 

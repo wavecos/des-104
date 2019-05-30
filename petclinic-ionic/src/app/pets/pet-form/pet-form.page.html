@@ -15,32 +15,45 @@
     <ion-icon slot="icon-only" name="camera"></ion-icon>
   </ion-button>
 
+  <form>
+
   <ion-list>
     <ion-item>
       <ion-label position="stacked">Nombre</ion-label>
-      <ion-input [(ngModel)]="pet.name" type="text" clearInput="true" placeholder="Nombre de la mascota"></ion-input>
+      <!--<div *ngIf="namePet.errors && (namePet.dirty || namePet.touched)" >-->
+        <!--<ion-label position="floating" color="danger">* Coloque un nombre a la mascota</ion-label>-->
+      <!--</div>-->
+      <ion-input name="namePet" #namePet="ngModel" [(ngModel)]="pet.name" type="text" clearInput="true" placeholder="Nombre de la mascota" required="true" minlength="3"></ion-input>
     </ion-item>
+    <ng-container *ngIf="namePet.errors && (namePet.dirty || namePet.touched)">
+      <ion-label *ngIf="namePet.errors.required" color="danger">* Coloque un nombre a la mascota</ion-label>
+      <ion-label *ngIf="namePet.errors.minlength" color="danger">* El nombre debe tener mas de 3 caracteres</ion-label>
+    </ng-container>
+
+
     <ion-item>
       <ion-label position="stacked">Raza</ion-label>
-      <ion-input [(ngModel)]="pet.breed" type="text" clearInput="true" placeholder="Raza de la mascota"></ion-input>
+      <ion-input name="breed" [(ngModel)]="pet.breed" type="text" clearInput="true" placeholder="Raza de la mascota" required="true"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Especie</ion-label>
-      <ion-select [(ngModel)]="pet.kind" placeholder="Especie Mascota">
+      <ion-select name="kind" [(ngModel)]="pet.kind" placeholder="Especie Mascota" required="true" >
         <ion-select-option *ngFor="let k of kinds | enumlist" [value]="k.key">{{ k.value }}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Edad</ion-label>
-      <ion-input [(ngModel)]="pet.age" type="number" placeholder="Edad de la mascota"></ion-input>
+      <ion-input name="age" [(ngModel)]="pet.age" type="number" placeholder="Edad de la mascota" required="true"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Fecha de Registro</ion-label>
-      <ion-datetime [(ngModel)]="pet.registerDate" displayFormat="DD/MM/YYYY" min="2000-01-01" max="2019-12-31"></ion-datetime>
+      <ion-datetime name="registerDate" [(ngModel)]="pet.registerDate" displayFormat="DD/MM/YYYY" min="2000-01-01" max="2019-12-31"></ion-datetime>
     </ion-item>
   </ion-list>
+
+  </form>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="savePet()" routerLink="/pet-list" >
