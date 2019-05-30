@@ -26,9 +26,9 @@ export let deletePet = (req: Request, res: Response) => {
     let petId = req.params.id;
     Pet.deleteOne({ _id: petId }, (err: any) => {
         if (err) {
-            res.send({ error: "Hubo un error al eliminar la mascota" });
+            res.send({ status: "ERROR", message: "Hubo un error al eliminar la mascota", result: err });
         } else {
-            res.send( { error: "Se elimino la mascota correctamente" } );
+            res.send({ status: "OK", message: "Se eliminó la mascota correctamente", result: null });
         }
     });
 };

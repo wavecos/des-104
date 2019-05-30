@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Pet} from '../../model/pet.model';
 import {PetService} from '../../services/pet.service';
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-pet-list',
@@ -11,9 +12,13 @@ export class PetListPage implements OnInit {
 
   pets: Pet[];
 
-  constructor(private petService: PetService) { }
+  constructor(private petService: PetService,
+              private toastController: ToastController) { }
 
   ngOnInit() {
+  }
+
+  ionViewDidEnter() {
     console.log('Pet List');
     this.loadPets();
   }
@@ -21,26 +26,21 @@ export class PetListPage implements OnInit {
   loadPets() {
     this.petService.getPets()
       .subscribe(response => {
-        if (response.status === 'OK') {
-          this.pets = [];
-          response.result.forEach(json => {
-            const pet: Pet = {
-              id: json['_id'],
-              name: json['name'],
-              age: json['age'],
-              kind: json['kind'],
-              breed: json['breed'],
-              photoUrl: json['photoUrl'],
-              registerDate: json['registerDate'],
-              status: json['status']
-            };
-            this.pets.push(pet);
-          });
-
+        if ( response.status === 'OK' ) {
+          this.pets = response.result;
         } else {
-          console.log(response.message);
+          this.showMessage(response.message);
         }
       });
+  }
+
+  async showMessage(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+
+    toast.present();
   }
 
 }

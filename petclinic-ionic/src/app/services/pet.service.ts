@@ -21,19 +21,53 @@ export class PetService {
           message: json['message'],
           result: json['result']
         };
+
+        if (response.status === 'OK') {
+          const pets: Pet[] = [];
+          response.result.forEach(jsonPet => {
+            const pet: Pet = {
+              id: jsonPet['_id'],
+              name: jsonPet['name'],
+              age: jsonPet['age'],
+              kind: jsonPet['kind'],
+              breed: jsonPet['breed'],
+              photoUrl: jsonPet['photoUrl'],
+              registerDate: jsonPet['registerDate'],
+              status: jsonPet['status']
+            };
+            pets.push(pet);
+          });
+          response.result = pets;
+        }
+
         return response;
       }));
   }
 
-  getPetById(id: string): Observable<Pet> {
+  getPetById(id: string): Observable<APIResponse> {
     return this.http.get('http://localhost:8080/pet/' + id)
       .pipe(map(json => {
-        // const response: APIResponse = {
-        //   status: json['status'],
-        //   message: json['message'],
-        //   result: json['result']
-        // };
-        return json['result'];
+        const response: APIResponse = {
+          status: json['status'],
+          message: json['message'],
+          result: json['result']
+        };
+
+        if ( response.status === 'OK' ) {
+          const jsonPet = response.result;
+          const pet: Pet = {
+            id: jsonPet['_id'],
+            name: jsonPet['name'],
+            age: jsonPet['age'],
+            kind: jsonPet['kind'],
+            breed: jsonPet['breed'],
+            photoUrl: jsonPet['photoUrl'],
+            registerDate: jsonPet['registerDate'],
+            status: jsonPet['status']
+          };
+          response.result = pet;
+        }
+        return response;
       }));
   }
 
@@ -49,8 +83,20 @@ export class PetService {
       }));
   }
 
-  updatePet(id: string, pet: Pet): Observable<APIResponse> {
-    return this.http.put('http://localhost:8080/pet/' + id, pet)
+  updatePet(pet: Pet): Observable<APIResponse> {
+    return this.http.put('http://localhost:8080/pet/' + pet.id, pet)
+      .pipe(map(json => {
+        const response: APIResponse = {
+          status: json['status'],
+          message: json['message'],
+          result: json['result']
+        };
+        return response;
+      }));
+  }
+
+  deletePetById(id: string): Observable<APIResponse> {
+    return this.http.delete('http://localhost:8080/pet/' + id)
       .pipe(map(json => {
         const response: APIResponse = {
           status: json['status'],

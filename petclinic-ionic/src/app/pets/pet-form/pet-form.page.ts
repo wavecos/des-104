@@ -19,6 +19,7 @@ import {of} from 'rxjs';
 export class PetFormPage implements OnInit {
 
   photoUrl: SafeResourceUrl;
+  isEdit: boolean;
   kinds = Kind;
   pet: Pet = {
     id: '',
@@ -44,8 +45,13 @@ export class PetFormPage implements OnInit {
       }))
       .pipe(switchMap(petId => {
         if (petId) { // edicion de mascota
-          return this.petService.getPetById(petId);
+          this.isEdit = true;
+          return this.petService.getPetById(petId)
+            .pipe(map(response => {
+              return response.result;
+            }));
         } else { // adicion de mascota
+          this.isEdit = false;
           return of({
             id: '',
             name: '',
@@ -64,9 +70,25 @@ export class PetFormPage implements OnInit {
   }
 
   savePet() {
-    console.log('Save Pet');
+    if (this.isEdit) {
+      this.updatePet();
+    } else {
+      this.createPet();
+    }
+  }
+
+  createPet() {
+    console.log('Create Pet');
     // console.log('pet :: ' + JSON.stringify(this.pet));
     this.petService.createPet(this.pet)
+      .subscribe(response => {
+        this.showMessage(response.message);
+      });
+  }
+
+  updatePet() {
+    console.log('Update Pet');
+    this.petService.updatePet(this.pet)
       .subscribe(response => {
         this.showMessage(response.message);
       });
