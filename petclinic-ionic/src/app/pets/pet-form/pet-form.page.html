@@ -1,64 +1,79 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Añadir Mascota</ion-title>
-    <ion-buttons>
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title>Añadir Mascota</ion-title>
+        <ion-buttons>
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <img [src]="photoUrl">
+    <img [src]="photoUrl">
 
-  <ion-button (click)="takePhoto()">
-    <ion-icon slot="icon-only" name="camera"></ion-icon>
-  </ion-button>
+    <ion-button (click)="takePhoto()">
+        <ion-icon slot="icon-only" name="camera"></ion-icon>
+    </ion-button>
 
-  <form>
+    <form #form="ngForm" novalidate>
+        <ion-list>
+            <ion-item>
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input name="namePet" #namePet="ngModel" [(ngModel)]="pet.name" type="text" clearInput="true"
+                           placeholder="Nombre de la mascota" required="true" minlength="3"></ion-input>
+            </ion-item>
+            <ng-container *ngIf="namePet.errors && (namePet.dirty || namePet.touched)">
+                <ion-label *ngIf="namePet.errors.required" color="danger">* Coloque un nombre a la mascota</ion-label>
+                <ion-label *ngIf="namePet.errors.minlength" color="danger">* El nombre debe tener mas de 3 caracteres
+                </ion-label>
+            </ng-container>
 
-  <ion-list>
-    <ion-item>
-      <ion-label position="stacked">Nombre</ion-label>
-      <!--<div *ngIf="namePet.errors && (namePet.dirty || namePet.touched)" >-->
-        <!--<ion-label position="floating" color="danger">* Coloque un nombre a la mascota</ion-label>-->
-      <!--</div>-->
-      <ion-input name="namePet" #namePet="ngModel" [(ngModel)]="pet.name" type="text" clearInput="true" placeholder="Nombre de la mascota" required="true" minlength="3"></ion-input>
-    </ion-item>
-    <ng-container *ngIf="namePet.errors && (namePet.dirty || namePet.touched)">
-      <ion-label *ngIf="namePet.errors.required" color="danger">* Coloque un nombre a la mascota</ion-label>
-      <ion-label *ngIf="namePet.errors.minlength" color="danger">* El nombre debe tener mas de 3 caracteres</ion-label>
-    </ng-container>
+            <ion-item>
+                <ion-label position="stacked">Raza</ion-label>
+                <ion-input name="breed" #breed="ngModel" [(ngModel)]="pet.breed" type="text" clearInput="true"
+                           placeholder="Raza de la mascota" required="true"></ion-input>
+            </ion-item>
+            <ng-container *ngIf="breed.errors && (breed.dirty || breed.touched)">
+                <ion-label *ngIf="breed.errors.required" color="danger">* Asigne una raza a la mascota</ion-label>
+            </ng-container>
 
+            <ion-item>
+                <ion-label position="stacked">Especie</ion-label>
+                <ion-select name="kind" #kind="ngModel" [(ngModel)]="pet.kind" placeholder="Especie Mascota"
+                            required="true">
+                    <ion-select-option *ngFor="let k of kinds | enumlist" [value]="k.key">{{ k.value }}
+                    </ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ng-container *ngIf="kind.errors && (kind.dirty || kind.touched)">
+                <ion-label *ngIf="kind.errors.required" color="danger">* Seleccione una Especie para la mascota
+                </ion-label>
+            </ng-container>
 
-    <ion-item>
-      <ion-label position="stacked">Raza</ion-label>
-      <ion-input name="breed" [(ngModel)]="pet.breed" type="text" clearInput="true" placeholder="Raza de la mascota" required="true"></ion-input>
-    </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Edad</ion-label>
+                <ion-input name="age" #age="ngModel" [(ngModel)]="pet.age" type="number"
+                           placeholder="Edad de la mascota" required="true" ageValidator="true"></ion-input>
+            </ion-item>
+            <ng-container *ngIf="age.errors && (age.dirty || age.touched)">
+                <ion-label *ngIf="age.errors.required" color="danger">* La mascota debe tener una edad</ion-label>
+                <ion-label *ngIf="age.errors.ageValidator" color="danger">* La edad de la mascota debe estar entre 1 y
+                    30 años
+                </ion-label>
+            </ng-container>
 
-    <ion-item>
-      <ion-label position="stacked">Especie</ion-label>
-      <ion-select name="kind" [(ngModel)]="pet.kind" placeholder="Especie Mascota" required="true" >
-        <ion-select-option *ngFor="let k of kinds | enumlist" [value]="k.key">{{ k.value }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Fecha de Registro</ion-label>
+                <ion-datetime name="registerDate" #registerDate="ngModel" [(ngModel)]="pet.registerDate"
+                              displayFormat="DD/MM/YYYY" min="2000-01-01" max="2019-12-31"></ion-datetime>
+            </ion-item>
+        </ion-list>
+    </form>
 
-    <ion-item>
-      <ion-label position="stacked">Edad</ion-label>
-      <ion-input name="age" [(ngModel)]="pet.age" type="number" placeholder="Edad de la mascota" required="true"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Fecha de Registro</ion-label>
-      <ion-datetime name="registerDate" [(ngModel)]="pet.registerDate" displayFormat="DD/MM/YYYY" min="2000-01-01" max="2019-12-31"></ion-datetime>
-    </ion-item>
-  </ion-list>
-
-  </form>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="savePet()" routerLink="/pet-list" >
-      <ion-icon name="checkmark"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="savePet()" [disabled]="form.invalid" routerLink="/pet-list">
+            <ion-icon name="checkmark"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
 </ion-content>

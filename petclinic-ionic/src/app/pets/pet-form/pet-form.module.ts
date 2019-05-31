@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PetFormPage } from './pet-form.page';
 import {EnumlistPipe} from '../../utils/enumlist.pipe';
+import {AgeValidatorDirective} from '../../utils/age-validator.directive';
 
 const routes: Routes = [
   {
@@ -22,6 +23,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PetFormPage, EnumlistPipe]
+  declarations: [PetFormPage, EnumlistPipe, AgeValidatorDirective]
 })
 export class PetFormPageModule {}
