@@ -60,3 +60,24 @@ export let updatePet = (req: Request, res: Response) => {
 
 };
 
+export let uploadPhoto = (req: Request, res: Response) => {
+    const petId = req.params.id;
+
+    if (Object.keys(req.files).length === 0) {
+        return res.status(400).send({status: "ERROR", message: "No hay archivos para subir.", result: null});
+    }
+
+    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    const sampleFile = req.files.sampleFile;
+
+    console.log(sampleFile);
+
+    // Use the mv() method to place the file somewhere on your server
+    sampleFile.mv("public/" + petId + ".jpg", (err: any) => {
+        if (err) {
+            return res.status(500).send({status: "ERROR", message: "Hubo un error al subir la foto", result: err});
+        }
+
+        res.send({ status: "OK", message: "se ha subido la Imagen correctamente", result: null });
+    });
+};

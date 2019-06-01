@@ -19,4 +19,8 @@ export class PetItemComponent implements OnInit {
     this.deleteEvent.emit(petId);
   }
 
+  photoUrl(): string {
+    return 'http://localhost:8080/' + this.pet.id + '.jpg';
+  }
+
 }

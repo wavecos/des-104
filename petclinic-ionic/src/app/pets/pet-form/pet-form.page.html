@@ -9,7 +9,7 @@
 
 <ion-content>
 
-    <img [src]="photoUrl">
+    <img [src]="photoUrl ? photoUrl : getPhotoUrl()">
 
     <ion-button (click)="takePhoto()">
         <ion-icon slot="icon-only" name="camera"></ion-icon>

@@ -16,7 +16,6 @@ export const PetSchema = new mongoose.Schema({
     age: { type: Number, required: true },
     breed: { type: String, required: true },
     registerDate: { type: Date, required: false },
-    photoUrl: { type: String, required: false },
     status: { type: String, required: true }
 });
 

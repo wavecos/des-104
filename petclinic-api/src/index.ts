@@ -36,27 +36,7 @@ app.get("/pet/:id", petController.getPet);
 app.post("/pet", petController.addPet);
 app.put("/pet/:id", petController.updatePet);
 app.delete("/pet/:id", petController.deletePet);
-
-app.post( "/upload/:id", ( req, res ) => {
-    const petId = req.params.id;
-
-    if (Object.keys(req.files).length === 0) {
-        return res.status(400).send("No files were uploaded.");
-    }
-
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    const sampleFile = req.files.sampleFile;
-
-    console.log(sampleFile);
-
-    // Use the mv() method to place the file somewhere on your server
-    sampleFile.mv("public/" + petId + ".jpg", (err: any) => {
-        if (err)
-            return res.status(500).send(err);
-
-        res.send("File uploaded!");
-    });
-} );
+app.post( "/upload/:id", petController.uploadPhoto);
 
 // Inicializamos el server de Express
 app.listen( port, () => {

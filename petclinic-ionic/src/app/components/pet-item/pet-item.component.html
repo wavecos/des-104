@@ -1,7 +1,7 @@
 <ion-item-sliding>
   <ion-item [routerLink]="['/pet-form/', pet.id]">
     <ion-avatar slot="start">
-      <img [src]="pet.photoUrl">
+      <img [src]="photoUrl()">
     </ion-avatar>
     <ion-label>
       <ion-text color="primary">

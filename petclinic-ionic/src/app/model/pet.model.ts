@@ -8,6 +8,5 @@ export interface Pet {
     kind: Kind; // especie
     age: number; // edad
     registerDate: Date; // fecha de registro
-    photoUrl: string;
     status: Status; // estado
 }

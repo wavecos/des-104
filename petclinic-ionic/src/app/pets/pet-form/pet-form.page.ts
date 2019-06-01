@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Kind} from '../../model/kind.enum';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {CameraResultType, CameraSource, Plugins} from '@capacitor/core';
+import {CameraPhoto, CameraResultType, CameraSource, Plugins} from '@capacitor/core';
 import {PetService} from '../../services/pet.service';
 import {Pet} from '../../model/pet.model';
 import {Status} from '../../model/status.enum';
@@ -19,6 +19,7 @@ import {of} from 'rxjs';
 export class PetFormPage implements OnInit {
 
   photoUrl: SafeResourceUrl;
+  photoImage: CameraPhoto;
   isEdit: boolean;
   kinds = Kind;
   pet: Pet = {
@@ -27,7 +28,6 @@ export class PetFormPage implements OnInit {
     age: 0,
     kind: Kind.DOG,
     breed: '',
-    photoUrl: '',
     registerDate: new Date(),
     status: Status.ACTIVE
   };
@@ -81,6 +81,10 @@ export class PetFormPage implements OnInit {
     console.log('Create Pet');
     // console.log('pet :: ' + JSON.stringify(this.pet));
     this.petService.createPet(this.pet)
+      .pipe(switchMap(response => {
+        const petSaved = response.result as Pet;
+        return this.petService.uploadPetPhoto(petSaved.id, this.photoImage.dataUrl);
+      }))
       .subscribe(response => {
         this.showMessage(response.message);
       });
@@ -89,6 +93,9 @@ export class PetFormPage implements OnInit {
   updatePet() {
     console.log('Update Pet');
     this.petService.updatePet(this.pet)
+      .pipe(switchMap(response => {
+        return this.petService.uploadPetPhoto(this.pet.id, this.photoImage.dataUrl);
+      }))
       .subscribe(response => {
         this.showMessage(response.message);
       });
@@ -106,14 +113,24 @@ export class PetFormPage implements OnInit {
   async takePhoto() {
     console.log('Take Pet\'s photo');
 
-    const image = await Plugins.Camera.getPhoto({
+    this.photoImage = await Plugins.Camera.getPhoto({
         quality: 85,
         allowEditing: false,
         resultType: CameraResultType.DataUrl,
-        source: CameraSource.Camera
+        source: CameraSource.Prompt
     });
 
-    this.photoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+    console.log(JSON.stringify(this.photoImage));
+
+    this.photoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.photoImage && (this.photoImage.dataUrl));
+  }
+
+  getPhotoUrl(): string {
+    if (this.pet.id) {
+      return 'http://localhost:8080/' + this.pet.id + '.jpg';
+    } else {
+      return '';
+    }
   }
 
 }
