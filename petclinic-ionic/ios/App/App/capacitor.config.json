@@ -3,8 +3,5 @@
   "appName": "petclinic-ionic",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www",
-  "server": {
-    "url": "http://10.0.0.17:8100"
-  }
+  "webDir": "www"
 }

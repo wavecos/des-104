@@ -20,7 +20,7 @@ export class PetItemComponent implements OnInit {
   }
 
   photoUrl(): string {
-    return 'http://localhost:8080/' + this.pet.id + '.jpg';
+    return 'http://10.0.0.17:8080/' + this.pet.id + '.jpg';
   }
 
 }

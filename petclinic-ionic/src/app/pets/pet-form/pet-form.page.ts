@@ -127,7 +127,7 @@ export class PetFormPage implements OnInit {
 
   getPhotoUrl(): string {
     if (this.pet.id) {
-      return 'http://localhost:8080/' + this.pet.id + '.jpg';
+      return 'http://10.0.0.17:8080/' + this.pet.id + '.jpg';
     } else {
       return '';
     }

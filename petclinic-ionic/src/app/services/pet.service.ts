@@ -15,7 +15,7 @@ export class PetService {
   }
 
   getPets(): Observable<APIResponse> {
-    return this.http.get('http://localhost:8080/pet')
+    return this.http.get('http://10.0.0.17:8080/pet')
       .pipe(map(json => {
         const response: APIResponse = {
           status: json['status'],
@@ -45,7 +45,7 @@ export class PetService {
   }
 
   getPetById(id: string): Observable<APIResponse> {
-    return this.http.get('http://localhost:8080/pet/' + id)
+    return this.http.get('http://10.0.0.17:8080/pet/' + id)
       .pipe(map(json => {
         const response: APIResponse = {
           status: json['status'],
@@ -71,7 +71,7 @@ export class PetService {
   }
 
   createPet(pet: Pet): Observable<APIResponse> {
-    return this.http.post('http://localhost:8080/pet', pet)
+    return this.http.post('http://10.0.0.17:8080/pet', pet)
       .pipe(map(json => {
         const response: APIResponse = {
           status: json['status'],
@@ -97,7 +97,7 @@ export class PetService {
   }
 
   updatePet(pet: Pet): Observable<APIResponse> {
-    return this.http.put('http://localhost:8080/pet/' + pet.id, pet)
+    return this.http.put('http://10.0.0.17:8080/pet/' + pet.id, pet)
       .pipe(map(json => {
         const response: APIResponse = {
           status: json['status'],
@@ -109,7 +109,7 @@ export class PetService {
   }
 
   deletePetById(id: string): Observable<APIResponse> {
-    return this.http.delete('http://localhost:8080/pet/' + id)
+    return this.http.delete('http://10.0.0.17:8080/pet/' + id)
       .pipe(map(json => {
         const response: APIResponse = {
           status: json['status'],
@@ -126,7 +126,7 @@ export class PetService {
     const formData = new FormData();
     formData.append('sampleFile', blob);
 
-    return this.http.post('http://localhost:8080/upload/' + petId, formData)
+    return this.http.post('http://10.0.0.17:8080/upload/' + petId, formData)
       .pipe(map(json => {
         const response: APIResponse = {
           status: json['status'],
