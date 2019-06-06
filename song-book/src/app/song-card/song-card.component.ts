@@ -13,13 +13,20 @@ export class SongCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     console.log(this.song.track);
+  }
+
+  changeBehavior($event) {
+    console.log($event);
+
+    this.song.artist = this.song.artist.toUpperCase();
+    this.song.price = this.song.price + 100;
   }
 
 

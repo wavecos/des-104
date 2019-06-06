@@ -1,5 +1,5 @@
 <div class="media">
-  <img [src]="song.albumImageUrl" class="ml-3" alt="...">
+  <img [src]="song.albumImageUrl" class="ml-3" alt="..." (mouseover)="changeBehavior($event)">
   <div class="media-body">
     <h5 class="mt-0 mb-1">{{ song.track }}</h5>
     <h6 class="mt-0 mb-1">{{ song.artist }}</h6>

@@ -25,4 +25,9 @@ export class SongListComponent implements OnInit {
       });
   }
 
+  checkKey($event) {
+    console.log($event);
+    localStorage.setItem('evento', Date.now());
+  }
+
 }

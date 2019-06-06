@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Kind} from '../../model/kind.enum';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {CameraPhoto, CameraResultType, CameraSource, Plugins} from '@capacitor/core';
+import {CameraPhoto, CameraResultType, CameraSource, Geolocation, Plugins} from '@capacitor/core';
 import {PetService} from '../../services/pet.service';
 import {Pet} from '../../model/pet.model';
 import {Status} from '../../model/status.enum';
@@ -10,6 +10,8 @@ import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {switchMap} from 'rxjs/internal/operators';
 import {of} from 'rxjs';
+
+
 
 @Component({
   selector: 'app-pet-form',
@@ -29,7 +31,9 @@ export class PetFormPage implements OnInit {
     kind: Kind.DOG,
     breed: '',
     registerDate: new Date(),
-    status: Status.ACTIVE
+    status: Status.ACTIVE,
+    latitude: 0.0,
+    longitude: 0.0
   };
 
   constructor(private sanitizer: DomSanitizer,
@@ -131,6 +135,26 @@ export class PetFormPage implements OnInit {
     } else {
       return '';
     }
+  }
+
+  async getCurrentPosition() {
+    console.log('Obtener la posicion actual...');
+    const position = await Geolocation.getCurrentPosition();
+    console.log('time stamp: ' + position.timestamp);
+
+    console.log('latitude : ' + position.coords.latitude);
+    console.log('longitude : ' + position.coords.longitude);
+    console.log('altitude : ' + position.coords.altitude);
+
+    this.pet.latitude = position.coords.latitude;
+    this.pet.longitude = position.coords.longitude;
+  }
+
+  async watchPosition() {
+    await Geolocation.watchPosition({}, (position, err) => {
+      console.log('latitude : ' + position.coords.latitude);
+      console.log('longitude : ' + position.coords.longitude);
+    });
   }
 
 }

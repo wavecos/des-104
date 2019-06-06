@@ -16,7 +16,9 @@ export const PetSchema = new mongoose.Schema({
     age: { type: Number, required: true },
     breed: { type: String, required: true },
     registerDate: { type: Date, required: false },
-    status: { type: String, required: true }
+    status: { type: String, required: true },
+    latitude: { type: Number, required: false },
+    longitude: { type: Number, required: false },
 });
 
 const Pet = mongoose.model('Pet', PetSchema);

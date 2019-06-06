@@ -3,7 +3,7 @@
 
   <div class="row">
       <form>
-          <input class="form-control" type="search" placeholder="Nombre artista" [(ngModel)]="artistName" name="artistName">
+          <input class="form-control" type="search" placeholder="Nombre artista" [(ngModel)]="artistName" name="artistName" (keypress)="checkKey($event)">
           <button class="btn btn-primary" (click)="searchArtist()" >Buscar</button>
         </form>
   </div>

@@ -67,6 +67,22 @@
                 <ion-datetime name="registerDate" #registerDate="ngModel" [(ngModel)]="pet.registerDate"
                               displayFormat="DD/MM/YYYY" min="2000-01-01" max="2019-12-31"></ion-datetime>
             </ion-item>
+
+            <ion-item>
+                <ion-label>Lat: {{pet.latitude}} Long: {{pet.longitude}}</ion-label>
+                <ion-button (click)="getCurrentPosition()" >
+                    <ion-icon name="locate"></ion-icon>
+                </ion-button>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Posicion actual - Lat: {{pet.latitude}} Long: {{pet.longitude}}</ion-label>
+                <ion-button (click)="watchPosition()" >
+                    <ion-icon name="navigate"></ion-icon>
+                </ion-button>
+            </ion-item>
+
+
         </ion-list>
     </form>
 

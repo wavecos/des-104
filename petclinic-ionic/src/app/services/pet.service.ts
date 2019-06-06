@@ -33,7 +33,9 @@ export class PetService {
               kind: jsonPet['kind'],
               breed: jsonPet['breed'],
               registerDate: jsonPet['registerDate'],
-              status: jsonPet['status']
+              status: jsonPet['status'],
+              latitude: jsonPet['latitude'],
+              longitude: jsonPet['longitude']
             };
             pets.push(pet);
           });
@@ -62,7 +64,9 @@ export class PetService {
             kind: jsonPet['kind'],
             breed: jsonPet['breed'],
             registerDate: jsonPet['registerDate'],
-            status: jsonPet['status']
+            status: jsonPet['status'],
+            latitude: jsonPet['latitude'],
+            longitude: jsonPet['longitude']
           };
           response.result = pet;
         }
@@ -88,7 +92,9 @@ export class PetService {
             kind: jsonPet['kind'],
             breed: jsonPet['breed'],
             registerDate: jsonPet['registerDate'],
-            status: jsonPet['status']
+            status: jsonPet['status'],
+            latitude: jsonPet['latitude'],
+            longitude: jsonPet['longitude']
           };
           response.result = pet;
         }

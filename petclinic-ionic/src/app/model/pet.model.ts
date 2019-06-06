@@ -9,4 +9,6 @@ export interface Pet {
     age: number; // edad
     registerDate: Date; // fecha de registro
     status: Status; // estado
+    latitude: number;
+    longitude: number;
 }
